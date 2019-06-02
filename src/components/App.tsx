@@ -1,17 +1,27 @@
 import * as React from 'react'
 import { connect } from 'react-redux';
 import { AppState } from '../models';
+import { Dispatch, Action } from 'redux';
+import { FetchActionCreator } from '../actions';
 
-interface AppProps{
-    title:string    
+interface IMapStateToProps{
+    title:string
 }
+interface IMapDispatchToProps{
+    fetch:() => Action
+}
+type AppProps = IMapStateToProps & IMapDispatchToProps
 
-class App extends React.Component<AppProps>{
+
+class App extends React.Component<AppProps,{}>{
+    
     
     render(){
-        const {title} = this.props
+
+        const {title,fetch} = this.props
+        fetch();
         return (
-            <div>App Component: {title}</div>
+            <div onClick={fetch}>App Component: {title} </div>
         )
     }
 }
@@ -19,5 +29,7 @@ class App extends React.Component<AppProps>{
 const mapStateToProps = (state:AppState) => ({
     title:state.status
 })
-
-export default connect<AppProps,{}>(mapStateToProps)(App)
+const mapDispatchToProps = (dispatch:Dispatch) =>({
+    fetch:() => dispatch(FetchActionCreator())
+})
+export default connect<IMapStateToProps,IMapDispatchToProps,{}>(mapStateToProps,mapDispatchToProps)(App)

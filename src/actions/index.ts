@@ -1,6 +1,7 @@
 import { Tip } from "../models";
+import { Action } from "redux";
 
-export interface FetchAction{
+export interface FetchAction extends Action{
     type: "FETCH"
 }
 export interface SuccessAction{
