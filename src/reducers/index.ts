@@ -15,7 +15,10 @@ export function AppReducer(state:AppState = initialState,action:AppAction){
             return state
         }
         case "SUCCESS":{
-            return state
+            return {
+                ...state,
+                tips:action.tips
+            }
         }
         case "ERROR":{
             return state
